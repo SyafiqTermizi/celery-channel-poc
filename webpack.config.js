@@ -1,20 +1,19 @@
 const path = require("path");
 
 module.exports = {
+  context: __dirname,
   entry: "./static/ts/index.tsx",
   target: "web",
   output: {
-    path: path.resolve(__dirname, "static", "build"),
+    path: path.resolve("./static/build/"),
     filename: "bundle.js",
-  },
-  resolve: {
-    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "awesome-typescript-loader",
+        loader: "ts-loader",
+        exclude: /node_modules/,
       },
       {
         enforce: "pre",
@@ -22,5 +21,8 @@ module.exports = {
         loader: "source-map-loader",
       }
     ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
   },
 };
