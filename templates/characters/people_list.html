@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %} Characters {% endblock title %}
+
+{% block content %}
+<div class="row mt-5 justify-content-center">
+    <div class="col-6 mt-5">
+        <p><b>Welcome, {{ request.user.username|title }}</b></p>
+    </div>
+    <div class="col-6 mt-5 text-right">
+        <a href={% url "characters:create" %} class="btn btn-outline-primary">Add People</a>
+        <a href={% url "users:logout" %} class="btn btn-outline-danger">Logout</a>
+    </div>
+</div>
+<div class="row mt-5 justify-content-center">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Birth Year</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Home World</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for people in people_list %}
+                <tr>
+                    <th scope="row">{{ people.name }}</th>
+                    <td>{{ people.birth_year }}</td>
+                    <td>{{ people.gender }}</td>
+                    <td>{{ people.homeworld }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

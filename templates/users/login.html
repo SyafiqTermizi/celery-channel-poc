@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %} Login{% endblock title %}
+
+{% block content %}
+    <div class="row mt-5 justify-content-center">
+        <div class="col-4 mt-5">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Email address</label>
+                    <input type="text" class="form-control" id="id_username" placeholder="Username" name="username">
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% if field.name == "username" %}
+                                {% for error in field.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="id_password">Password</label>
+                    <input type="password" class="form-control" id="id_password" placeholder="Password" name="password">
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% if field.name == "password" %}
+                                {% for error in field.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-4">
+            {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

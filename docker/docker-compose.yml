@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  falcon_db:
+    container_name: falcon_db
+    image: postgres:13-alpine
+    env_file:
+      - ../.env
+    ports:
+      - 5432:5432
+
+  falcon_redis:
+    container_name: falcon_redis
+    image: redis:6.2-alpine
+
+  falcon_app: &django_base
+    container_name: falcon_app
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    command: poetry run /app/manage.py runserver 0:80
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env
+    depends_on:
+      - falcon_db
+      - falcon_redis
+    ports:
+      - 8000:80
+
+  falcon_bg_task:
+    <<: *django_base
+    container_name: falcon_bg_task
+    command: poetry run celery -A falconeye.bg_tasks worker --loglevel=INFO
+    depends_on:
+      - falcon_db
+    ports: []

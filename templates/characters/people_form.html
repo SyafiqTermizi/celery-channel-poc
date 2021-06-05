@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Form {% endblock title %}
+
+{% block content %}
+<div class="row mt-5 justify-content-center">
+    <div class="col-6 mt-5">
+        <p><b>Welcome, {{ request.user.username|title }}</b></p>
+    </div>
+    <div class="col-6 mt-5 text-right">
+        <a href={% url "users:logout" %} class="btn btn-outline-primary">Add People</a>
+        <a href={% url "users:logout" %} class="btn btn-outline-danger">Logout</a>
+    </div>
+</div>
+
+<div class="row mt-5 justify-content-center">
+    <div class="col-12">
+        <div id="people-form"></div>
+    </div>
+</div>
+
+<script src="{% static 'build/bundle.js' %}"></script>
+{% endblock content %}
