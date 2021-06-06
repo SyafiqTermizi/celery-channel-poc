@@ -33,8 +33,9 @@ const validate = (values: formData): formData => {
 };
 
 export const CreateCharacterForm = () => {
-  const [data, setData] = useState<formData>();
-  const [errors, setErrors] = useState<formData>();
+  const initialValue: formData = { name: "", birthYear: "", gender: "" };
+  const [data, setData] = useState<formData>({ ...initialValue });
+  const [errors, setErrors] = useState<formData>({ ...initialValue });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

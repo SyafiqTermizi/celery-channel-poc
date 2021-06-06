@@ -2,8 +2,13 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { CreateCharacterForm } from "./components/CharacterForm";
+import { CreatePlanetForm } from "./components/PlanetForm";
 
-ReactDOM.render(
-  <CreateCharacterForm />,
-  document.getElementById("people-form")
+const App = () => (
+  <>
+    <CreateCharacterForm />
+    <CreatePlanetForm />
+  </>
 );
+
+ReactDOM.render(<App />, document.getElementById("people-form"));

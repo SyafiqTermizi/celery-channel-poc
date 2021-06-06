@@ -2,7 +2,7 @@ import * as React from "react";
 
 interface LabelProps {
   label: string;
-  errorMsg: string;
+  errorMsg: string | number;
   inputName: string;
 }
 
