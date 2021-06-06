@@ -8,6 +8,7 @@ interface planetData {
 interface peopleData {
   name?: string;
   birthYear?: string;
+  birth_year?: string;
   gender?: string;
   homeworld?: planetData;
 }

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import axios from "axios";
 
 import { Input, Label, TextInput } from "./BaseForm";
 
@@ -27,7 +28,19 @@ export const CreatePeopleForm = () => {
     setErrors(err);
 
     if (!err.name && !err.birthYear && !err.gender) {
-      console.log("form submitted!");
+      const postData = { ...data };
+      postData.birth_year = postData.birthYear;
+      delete postData.birthYear;
+
+      const axiosInstance = axios.create({
+        xsrfCookieName: "csrftoken",
+        xsrfHeaderName: "X-CSRFTOKEN",
+      });
+
+      axiosInstance
+        .post("/api/create", postData)
+        .then((res) => window.location.replace("/"))
+        .catch((err) => err);
     }
   };
 

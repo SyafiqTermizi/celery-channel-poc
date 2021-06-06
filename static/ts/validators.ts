@@ -32,7 +32,7 @@ export const validate = (values: peopleData): peopleData => {
   }
 
   if (!values.homeworld.name) {
-    errors.homeworld.name = "Name is required";
+    errors.homeworld.name = "Planet name is required";
   }
 
   if (!values.homeworld.population) {
