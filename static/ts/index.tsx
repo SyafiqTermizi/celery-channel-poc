@@ -1,14 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { CreateCharacterForm } from "./components/CharacterForm";
-import { CreatePlanetForm } from "./components/PlanetForm";
+import { CreatePeopleForm } from "./components/PeopleForm";
 
-const App = () => (
-  <>
-    <CreateCharacterForm />
-    <CreatePlanetForm />
-  </>
-);
-
-ReactDOM.render(<App />, document.getElementById("people-form"));
+ReactDOM.render(<CreatePeopleForm />, document.getElementById("people-form"));

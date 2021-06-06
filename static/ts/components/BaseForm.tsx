@@ -12,6 +12,11 @@ interface InputProps extends LabelProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+interface TextInputProps extends LabelProps {
+  inputValue: number | string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 export const Label: React.FC<LabelProps> = ({
   label,
   inputName,
@@ -43,4 +48,21 @@ export const Input: React.FC<InputProps> = ({
       onChange={onChange}
     />
   </Label>
+);
+
+export const TextInput: React.FC<TextInputProps> = ({
+  label,
+  inputName,
+  inputValue,
+  errorMsg,
+  onChange,
+}) => (
+  <Input
+    label={label}
+    inputName={inputName}
+    inputType="text"
+    inputValue={inputValue}
+    errorMsg={errorMsg}
+    onChange={onChange}
+  />
 );
