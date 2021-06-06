@@ -37,6 +37,7 @@ LOCAL_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "channels",
 ]
 
 DJANGO_APPS = [
@@ -81,6 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "falconeye.config.wsgi.application"
+ASGI_APPLICATION = "falconeye.config.asgi.application"
 
 
 # Database
