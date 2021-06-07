@@ -5,6 +5,8 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from celery import shared_task
 
+from falconeye.utils import update_task_status
+
 
 class People(TypedDict):
     name: str
@@ -32,6 +34,8 @@ class SearchData(TypedDict):
 
 @shared_task
 def search_people(search_data: SearchData) -> SearchData:
+    update_task_status(search_data["group_name"], "Fetching user data...")
+
     name = search_data["name"]
     url = f"https://swapi.dev/api/people/?search={name}"
 
@@ -46,6 +50,8 @@ def search_people(search_data: SearchData) -> SearchData:
 
 @shared_task
 def get_homeworld(search_data: SearchData) -> SearchData:
+    update_task_status(search_data["group_name"], "Fetching homeworld data...")
+
     home_url = search_data["result"]["homeworld"]
     planet: Planet = requests.get(home_url).json()
     search_data["result"].update({"homeworld": planet})

@@ -39,6 +39,13 @@ class SearchCharacterConsumer(WebsocketConsumer):
 
         self.send(Response("PENDING", "Processing data...").to_json())
 
+    def status_update(self, event):
+        """
+        event
+            {'type': 'status_update', 'data': {'status': 'PENDING', 'message': ''}}
+        """
+        self.send(Response(**event["data"]).to_json())
+
     def search_result(self, event):
         """
         event
