@@ -13,6 +13,7 @@ celery = {extras = ["redis"], version = "^5.1.0"}
 requests = "^2.25.1"
 djangorestframework = "^3.12.4"
 channels = "^3.0.3"
+channels-redis = "^3.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b1"
