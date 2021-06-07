@@ -9,13 +9,21 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 
 import os
 
-from channels.routing import ProtocolTypeRouter
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
+
+from falconeye.characters import routing as character_routes
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "falconeye.settings")
 
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
+        "websocket": AuthMiddlewareStack(
+            URLRouter(
+                character_routes.websocket_urlpatterns,
+            )
+        ),
     }
 )

@@ -84,6 +84,14 @@ TEMPLATES = [
 WSGI_APPLICATION = "falconeye.config.wsgi.application"
 ASGI_APPLICATION = "falconeye.config.asgi.application"
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("falcon_redis", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

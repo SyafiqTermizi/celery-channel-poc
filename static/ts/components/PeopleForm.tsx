@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Input, Label, TextInput } from "./BaseForm";
@@ -8,7 +8,7 @@ import { validate } from "../validators";
 
 const initialData = {
   name: "",
-  birthYear: "",
+  birth_year: "",
   gender: "",
   homeworld: {
     name: "",
@@ -18,19 +18,35 @@ const initialData = {
   },
 };
 
+const ws = new WebSocket("ws://localhost:8000/ws/search/");
+
 export const CreatePeopleForm = () => {
   const [data, setData] = useState<peopleData>({ ...initialData });
   const [errors, setErrors] = useState<peopleData>({ ...initialData });
+
+  useEffect(() => {
+    ws.onmessage = function (e) {
+      const resData = JSON.parse(e.data);
+      console.log(resData);
+      if (!resData.data) return;
+      setData(resData.data);
+    };
+  }, []);
+
+  const handleSearch = () => {
+    if (!data.name) return;
+    ws.send(JSON.stringify({ name: data.name }));
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const err = validate(data);
     setErrors(err);
 
-    if (!err.name && !err.birthYear && !err.gender) {
+    if (!err.name && !err.birth_year && !err.gender) {
       const postData = { ...data };
-      postData.birth_year = postData.birthYear;
-      delete postData.birthYear;
+      postData.birth_year = postData.birth_year;
+      delete postData.birth_year;
 
       const axiosInstance = axios.create({
         xsrfCookieName: "csrftoken",
@@ -39,7 +55,7 @@ export const CreatePeopleForm = () => {
 
       axiosInstance
         .post("/api/create", postData)
-        .then((res) => window.location.replace("/"))
+        .then((_) => window.location.replace("/"))
         .catch((err) => err);
     }
   };
@@ -63,6 +79,7 @@ export const CreatePeopleForm = () => {
               className="btn btn-outline-secondary"
               type="button"
               id="search"
+              onClick={handleSearch}
             >
               Search
             </button>
@@ -72,9 +89,9 @@ export const CreatePeopleForm = () => {
 
       <TextInput
         label="Birth Year"
-        inputName="birthYear"
-        inputValue={data.birthYear}
-        errorMsg={errors.birthYear}
+        inputName="birth_year"
+        inputValue={data.birth_year}
+        errorMsg={errors.birth_year}
         onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
       />
 
@@ -87,10 +104,18 @@ export const CreatePeopleForm = () => {
             setData({ ...data, [e.target.name]: e.target.value })
           }
         >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="unknown">Unknown</option>
-          <option value="n/a">N/A</option>
+          <option value="male" selected={data.gender == "male"}>
+            Male
+          </option>
+          <option value="female" selected={data.gender == "female"}>
+            Female
+          </option>
+          <option value="unknown" selected={data.gender == "unknown"}>
+            Unknown
+          </option>
+          <option value="n/a" selected={data.gender == "n/a"}>
+            N/A
+          </option>
         </select>
       </Label>
 

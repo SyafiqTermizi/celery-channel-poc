@@ -1,6 +1,6 @@
 const initialData = {
   name: "",
-  birthYear: "",
+  birth_year: "",
   gender: "",
   homeworld: {
     name: "",
@@ -17,10 +17,10 @@ export const validate = (values: peopleData): peopleData => {
     errors.name = "Name is required";
   }
 
-  if (!values.birthYear) {
-    errors.birthYear = "Birth Year is required";
-  } else if (!/^\d*\.?\d*\s?(ABY|BBY)/.test(values.birthYear)) {
-    errors.birthYear = "Birth Year should be in 123 ABY or 123 BBY format";
+  if (!values.birth_year) {
+    errors.birth_year = "Birth Year is required";
+  } else if (!/^\d*\.?\d*\s?(ABY|BBY)/.test(values.birth_year)) {
+    errors.birth_year = "Birth Year should be in 123 ABY or 123 BBY format";
   }
 
   const validGender = ["male", "female", "unknown", "n/a"];
