@@ -1,17 +1,7 @@
-const initialData = {
-  name: "",
-  birth_year: "",
-  gender: "",
-  homeworld: {
-    name: "",
-    terrain: "",
-    climate: "",
-    population: "",
-  },
-};
+import { peopleInitialData } from "./constants";
 
-export const validate = (values: peopleData): peopleData => {
-  const errors: peopleData = { ...initialData };
+export const validate = (values: PeopleData): PeopleData => {
+  const errors: PeopleData = { ...peopleInitialData };
 
   if (!values.name) {
     errors.name = "Name is required";

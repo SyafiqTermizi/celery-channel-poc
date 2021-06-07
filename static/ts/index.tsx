@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { CreatePeopleForm } from "./components/PeopleForm";
+import { CreatePeoplePage } from "./pages/CreatePeoplePage";
 
-ReactDOM.render(<CreatePeopleForm />, document.getElementById("people-form"));
+ReactDOM.render(<CreatePeoplePage />, document.getElementById("people-form"));
